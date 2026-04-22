@@ -28,7 +28,7 @@ function preload() {
 
 function setup() {
     createCanvas(500, 700);
-    
+    console.log(typeof createSprite);
 
     engine = Engine.create();
     world = engine.world;
