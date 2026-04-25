@@ -16,13 +16,42 @@ let fruit_con;
 let bg;
 let fruitImg;
 let bunnyImg;
-let bunny;
+let bunny = {
+    x: 270,
+    y: 100,
+    scale: 0.2
+}
+let animations = {
+    blinking: [],
+    eating: [],
+    crying: []
+}
+let currentAnimation = "blinking";
+let frameIndex = 0;
+let frameDelay = 10;
 
 function preload() {
 
     bg = loadImage("assets/background.png");
     fruitImg = loadImage("assets/melon.png");
     bunnyImg = loadImage("assets/Rabbit-01.png");
+
+    //blinking
+    animations.blinking.push(loadImage("assets/blink-1.png"));
+    animations.blinking.push(loadImage("assets/blink-2.png"));
+    animations.blinking.push(loadImage("assets/blink-3.png"));
+
+    //eating
+    animations.eating.push(loadImage("assets/eat-0.png"));
+    animations.eating.push(loadImage("assets/eat-1.png"));
+    animations.eating.push(loadImage("assets/eat-2.png"));
+    animations.eating.push(loadImage("assets/eat-3.png"));
+    animations.eating.push(loadImage("assets/eat-4.png"));
+
+    //crying
+    animations.crying.push(loadImage("assets/sad-1.png"));
+    animations.crying.push(loadImage("assets/sad-2.png"));
+    animations.crying.push(loadImage("assets/sad-3.png"));
 }
 
 
@@ -61,9 +90,26 @@ function draw() {
     Engine.update(engine);
     ground.display();
     rope.display();
-
+    
+    drawBunny();
     drawSprites();
 
    // ellipse(fruit.position.x, fruit.position.y, 15);
 }
 
+function drawBunny() {
+    let frames = animations[currentAnimation];
+    
+    if(frameCount % frameDelay === 0 ) {
+        frameIndex++;
+
+        if(currentAnimation === "eating" || currentAnimation === "crying") {
+            currentAnimation = "blinking";
+        }
+    }
+
+
+    let img = frames[frameIndex];
+    imageMode(CENTER);
+    image(img, bunny.x, bunny.y, 100 * bunny.scale, 100 * bunny.scale);
+}
