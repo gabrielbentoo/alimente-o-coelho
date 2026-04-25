@@ -18,8 +18,8 @@ let fruitImg;
 let bunnyImg;
 let bunny = {
     x: 270,
-    y: 100,
-    scale: 0.2
+    y: 600,
+    scale: 1.5
 }
 let animations = {
     blinking: [],
@@ -57,7 +57,7 @@ function preload() {
 
 function setup() {
     createCanvas(500, 700);
-    console.log(typeof createSprite);
+    
 
     engine = Engine.create();
     world = engine.world;
@@ -73,8 +73,8 @@ function setup() {
 
     fruit_con = new Link(rope, fruit);
 
-    bunny = createSprite(200, 620, 100, 100);
-    bunny.addImage(bunnyImg);
+    
+    
 
     ellipseMode(RADIUS);
     rectMode(CENTER);
@@ -92,7 +92,7 @@ function draw() {
     rope.display();
     
     drawBunny();
-    drawSprites();
+   
 
    // ellipse(fruit.position.x, fruit.position.y, 15);
 }
@@ -100,16 +100,22 @@ function draw() {
 function drawBunny() {
     let frames = animations[currentAnimation];
     
+    if(!frames || frames.length === 0) return;
+
     if(frameCount % frameDelay === 0 ) {
         frameIndex++;
-
-        if(currentAnimation === "eating" || currentAnimation === "crying") {
+        if(frameIndex >= frames.length) {
+            frameIndex = 0;
+            if(currentAnimation === "eating" || currentAnimation === "crying") {
             currentAnimation = "blinking";
+            }
         }
+        
     }
 
 
     let img = frames[frameIndex];
+    if(!img) return;
     imageMode(CENTER);
     image(img, bunny.x, bunny.y, 100 * bunny.scale, 100 * bunny.scale);
 }
