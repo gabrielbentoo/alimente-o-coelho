@@ -13,4 +13,7 @@ class Link {
         );
         World.add(engine.world, this.link);
     }
+    detach() {
+        World.remove(engine.world, this.link);
+    }
 }

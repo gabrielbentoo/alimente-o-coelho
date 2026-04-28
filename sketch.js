@@ -12,7 +12,7 @@ let world;
 let ground;
 let rope;
 let fruit;
-let fruit_con;
+let fruitCon;
 let bg;
 let fruitImg;
 let bunnyImg;
@@ -29,6 +29,7 @@ let animations = {
 let currentAnimation = "blinking";
 let frameIndex = 0;
 let frameDelay = 10;
+let button;
 
 function preload() {
 
@@ -71,10 +72,13 @@ function setup() {
     fruit = Bodies.circle(300, 300, 15, fruitOptions);
     Matter.Composite.add(rope.body, fruit);
 
-    fruit_con = new Link(rope, fruit);
+    fruitCon = new Link(rope, fruit);
 
     
-    
+    button = createImg("assets/cut-btn.png");
+    button.position(230, 30);
+    button.size(50,50);
+    button.mouseClicked(drop);
 
     ellipseMode(RADIUS);
     rectMode(CENTER);
@@ -118,4 +122,10 @@ function drawBunny() {
     if(!img) return;
     imageMode(CENTER);
     image(img, bunny.x, bunny.y, 100 * bunny.scale, 100 * bunny.scale);
+}
+
+function drop() {
+    rope.break();
+    fruitCon.detach();
+    fruitCon = null;
 }
