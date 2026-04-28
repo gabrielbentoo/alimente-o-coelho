@@ -88,12 +88,30 @@ function setup() {
 function draw() {
     background(51);
     image(bg, width /2, height /2, 490, 690);
-    image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
+    
 
 
     Engine.update(engine);
     ground.display();
     rope.display();
+
+    if(fruit != null) {
+        image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
+    }
+
+    if(fruit != null && collide(fruit, bunny, 80)) {
+        currentAnimation = "eating";
+        frameIndex = 0;
+        World.remove(world, fruit);
+        fruit = null;
+    }
+
+    if(fruit != null && collide(fruit, ground.body, 50)) {
+        currentAnimation = "crying";
+        frameIndex = 0;
+        World.remove(world, fruit);
+        fruit = null;
+    }
     
     drawBunny();
    
@@ -128,4 +146,14 @@ function drop() {
     rope.break();
     fruitCon.detach();
     fruitCon = null;
+}
+
+function collide(body, target, distance) {
+    if(body != null) {
+        let tx = target.x || target.position?.x;
+        let ty = target.y || target.position?.y;
+        let d = dist(body.position.x, body.position.y, tx, ty);
+        return d <= distance;
+    }
+    return false;
 }
