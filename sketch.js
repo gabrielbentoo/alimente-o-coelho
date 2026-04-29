@@ -21,15 +21,24 @@ let bunny = {
     y: 600,
     scale: 1.5
 }
+
 let animations = {
     blinking: [],
     eating: [],
     crying: []
 }
+
 let currentAnimation = "blinking";
 let frameIndex = 0;
 let frameDelay = 10;
 let button;
+let isGameOver = false;
+let bgSound;
+let cutSound;
+let sadSound;
+let eatingSound;
+let airSound;
+let blower;
 
 function preload() {
 
@@ -53,6 +62,13 @@ function preload() {
     animations.crying.push(loadImage("assets/sad-1.png"));
     animations.crying.push(loadImage("assets/sad-2.png"));
     animations.crying.push(loadImage("assets/sad-3.png"));
+
+    bgSound = loadSound("assets/sound1.mp3");
+    sadSound = loadSound("assets/sad.wav");
+    cutSound = loadSound("assets/rope_cut.mp3");
+    eatingSound = loadSound("eating_sound.mp3");
+    airSound = loadSound("assets/air.wav");
+
 }
 
 
@@ -95,23 +111,34 @@ function draw() {
     ground.display();
     rope.display();
 
-    if(fruit != null) {
+    if(fruit != null ) {
         image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
     }
 
-    if(fruit != null && collide(fruit, bunny, 80)) {
-        currentAnimation = "eating";
-        frameIndex = 0;
-        World.remove(world, fruit);
-        fruit = null;
-    }
+    if(fruit != null) {
 
-    if(fruit != null && collide(fruit, ground.body, 50)) {
-        currentAnimation = "crying";
-        frameIndex = 0;
-        World.remove(world, fruit);
-        fruit = null;
+        if(collide(fruit, ground.body, 80)) {
+            currentAnimation = "crying";
+            frameIndex = 0;
+            isGameOver = true;
+            World.remove(world, fruit);
+            fruit = null;
+        }
+
+        else if(collide(fruit, bunny, 80)) {
+            currentAnimation = "eating";
+            frameIndex = 0;
+            World.remove(world, fruit);
+            fruit = null;
+        }
+
     }
+    
+    blower = createImg("assets/balloon.png");
+    blower.position(10, 250);
+    blower.size(150, 100);
+    blower.mouseClicked(airblow);
+    
     
     drawBunny();
    
@@ -124,11 +151,18 @@ function drawBunny() {
     
     if(!frames || frames.length === 0) return;
 
+    if(isGameOver && currentAnimation === "crying") {
+        let img = frames[frames.length -1];
+        imageMode(CENTER);
+        image(img, bunny.x, bunny.y, 100 * bunny.scale, 100 * bunny.scale);
+        return;
+    }
+
     if(frameCount % frameDelay === 0 ) {
         frameIndex++;
         if(frameIndex >= frames.length) {
             frameIndex = 0;
-            if(currentAnimation === "eating" || currentAnimation === "crying") {
+            if(currentAnimation === "eating") {
             currentAnimation = "blinking";
             }
         }
@@ -156,4 +190,9 @@ function collide(body, target, distance) {
         return d <= distance;
     }
     return false;
+}
+
+function airblow() {
+    Matter.Body.applyForce(fruit, { x: 0, y: 0}, { x: 0.01, y: 0});
+    airSound.play();
 }
