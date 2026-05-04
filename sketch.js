@@ -17,8 +17,8 @@ let bg;
 let fruitImg;
 let bunnyImg;
 let bunny = {
-    x: 270,
-    y: 600,
+    x: 420,
+    y: 620,
     scale: 1.5
 }
 
@@ -39,6 +39,7 @@ let sadSound;
 let eatingSound;
 let airSound;
 let blower;
+let muteBtn;
 
 function preload() {
 
@@ -96,6 +97,19 @@ function setup() {
     button.size(50,50);
     button.mouseClicked(drop);
 
+    blower = createImg("assets/balloon.png");
+    blower.position(10, 200);
+    blower.size(150, 100);
+    blower.mouseClicked(airblow);
+
+    bgSound.play();
+    bgSound.setVolume(0.15);
+
+    muteBtn = createImg("assets/mute.png");
+    muteBtn.position(450, 20);
+    muteBtn.size(50,50);
+    muteBtn.mouseClicked(mute);
+
     ellipseMode(RADIUS);
     rectMode(CENTER);
     imageMode(CENTER);
@@ -118,6 +132,8 @@ function draw() {
     if(fruit != null) {
 
         if(collide(fruit, ground.body, 80)) {
+            bgSound.stop();
+            sadSound.play();
             currentAnimation = "crying";
             frameIndex = 0;
             isGameOver = true;
@@ -126,6 +142,7 @@ function draw() {
         }
 
         else if(collide(fruit, bunny, 80)) {
+            eatingSound.play();
             currentAnimation = "eating";
             frameIndex = 0;
             World.remove(world, fruit);
@@ -134,10 +151,7 @@ function draw() {
 
     }
     
-    blower = createImg("assets/balloon.png");
-    blower.position(10, 200);
-    blower.size(150, 100);
-    blower.mouseClicked(airblow);
+   
     
     
     drawBunny();
@@ -177,6 +191,7 @@ function drawBunny() {
 }
 
 function drop() {
+    cutSound.play();
     rope.break();
     fruitCon.detach();
     fruitCon = null;
@@ -195,4 +210,13 @@ function collide(body, target, distance) {
 function airblow() {
     Matter.Body.applyForce(fruit, { x: 0, y: 0}, { x: 0.01, y: 0});
     airSound.play();
+}
+
+function mute() {
+    if(bgSound.isPlaying()) {
+        bgSound.stop();
+    }
+    else{
+        bgSound.play();
+    }
 }
