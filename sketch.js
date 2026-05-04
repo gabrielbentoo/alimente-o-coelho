@@ -66,7 +66,7 @@ function preload() {
     bgSound = loadSound("assets/sound1.mp3");
     sadSound = loadSound("assets/sad.wav");
     cutSound = loadSound("assets/rope_cut.mp3");
-    eatingSound = loadSound("eating_sound.mp3");
+    eatingSound = loadSound("assets/eating_sound.mp3");
     airSound = loadSound("assets/air.wav");
 
 }
@@ -135,7 +135,7 @@ function draw() {
     }
     
     blower = createImg("assets/balloon.png");
-    blower.position(10, 250);
+    blower.position(10, 200);
     blower.size(150, 100);
     blower.mouseClicked(airblow);
     
