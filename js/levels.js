@@ -136,3 +136,110 @@ function checkGameState() {
 
 //win / lose
 
+function winLevel() {
+    gameState = "win";
+
+    let stars = calculateStars();
+    saveProgress(currentLevel, stars);
+
+    setTimeout(() => {
+        nextLevel();
+    }, 1500);
+}
+
+function loseLevel() {
+    gameState = "lose";
+
+}
+
+//proxima fase
+
+function nextLevel() {
+    if(currentLevel + 1 < levels.length) {
+        loadLevel(currentLevel + 1);
+    } else {
+        console.log("Voce zerou o jogo!");
+    }
+}
+
+//sistema de estrelas
+
+function calculateStars() {
+    let stars = 3;
+
+    if(frameCount > 600) stars = 2;
+    if(frameCount > 1000) stars = 1;
+
+    return stars;
+}
+
+//salvar progresso
+
+function saveProgress(level, stars) {
+    if(level >= playerProgress.unlockedLevel) {
+        playerProgress.unlockedLevel = level +1;
+    }
+
+    playerProgress.stars[level] = stars;
+
+    localStorage.setItem("gameProgress", JSON.stringify(playerProgress));
+}
+
+//carregar progresso
+
+function loadProgress() {
+    let saved = localStorage.getItem("gameProgress");
+
+    if(saved) {
+        playerProgress = JSON.parse(saved);
+    }
+}
+
+//hud
+
+function drawHud() {
+    fill(255);
+    textSize(18);
+    textAlign(LEFT);
+
+    text("Fase: " + (currentLevel + 1), 20, 30);
+
+    if(playerProgress.stars[currentLevel]) {
+        text("⭐: " + playerProgress.stars[currentLevel], 20, 60);
+
+    }
+
+    if(gameState === "win") {
+        textSize(32);
+        text("YOU WIN!", width/2 - 80, height/2);
+
+    }
+
+    if(gameState === "lose") {
+        textSize(32);
+        text("TRY AGAIN!", width/2 -100, height/2);
+    }
+}
+
+//transicao
+
+
+let fading = false;
+
+function startFade() {
+    fading = true;
+    fadeAlpha = 0;
+}
+
+function drawFade() {
+    if(fading) {
+        fadeAlpha += 10;
+
+        fill(0, fadeAlpha);
+        Reflect(0, 0, width, height);
+
+        if(fadeAlpha >= 255) {
+            fading = false;
+        }
+    }
+}
