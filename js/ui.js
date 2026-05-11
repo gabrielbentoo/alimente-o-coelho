@@ -51,3 +51,84 @@ function drawWinScreen() {
         clearUI();
     });
 }
+
+function drawLoseScreen() {
+    drawOverlay();
+
+    textAlign(CENTER);
+    textSize(36);
+    fill("#FF4C4C");
+    text("TRY AGAIN!", width/2, height/2 -40);
+    
+    createUiButton("Retry!", width/2 -60, height/2 + 40, () => {
+        loadLevel(currentLevel);
+        clearUI();
+    });
+}
+
+function drawOverlay() {
+    fill(0, 180);
+    rect(0, 0, width, height);
+}
+
+function createUiButton(label, x, y, onClick) {
+    if(uiButtons.find(btn => btn.label === label)) return;
+
+    let btn = createButton(label);
+    btn.position(x, y,);
+    btn.size(120, 40);
+    btn.style("font-size", "16px");
+    btn.style("background", "#222");
+    btn.style("color", "#FFF");
+    btn.style("border", "none");
+    btn.style("border-radius", "8px");
+    btn.style("cursor", "pointer");
+    btn.mousePressed(onClick);
+
+    uiButtons.push(btn);
+}
+
+function clearUI() {
+    uiButtons.forEach(btn => btn.remove());
+    uiButtons = [];
+
+}
+
+function startFade(type = "out") {
+    isFading = true;
+    fadeDirection = type;
+    fadeAlpha = (type === "in") ? 255 : 0;
+}
+
+function drawFade() {
+    if(!isFading) return;
+    
+    if(fadeDirection === "out") {
+        fadeAlpha += 10;
+        if(fadeAlpha >= 255) {
+            fadeAlpha = 255;
+            isFading = false;
+        }
+        
+    }
+    if(fadeDirection === "in") {
+        fadeAlpha -=10;
+
+        if(fadeAlpha <= 0) {
+            fadeAlpha = 0;
+            isFading = false;
+        }
+    }
+
+    fill(0, fadeAlpha);
+    rect(0, 0, width, height);
+
+}
+
+function drawLoading(texto = "loading...") {
+    background(0);
+    textAlign(CENTER, CENTER);
+    textSize(24);
+    fill(255);
+    text(texto, width/2, height/2);
+}

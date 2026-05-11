@@ -1,18 +1,19 @@
 const Engine = Matter.Engine;
-const Render = Matter.Render;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 const Body = Matter.Body;
-const Composites = Matter.Composites;
 const Composite = Matter.Composite;
 
 let engine;
 let world;
 let ground;
+let higherground;
 let rope;
+let rope2;
 let fruit;
 let fruitCon;
+let fruitCon2;
 let bg;
 let fruitImg;
 let bunnyImg;
@@ -79,6 +80,10 @@ function setup() {
 
     engine = Engine.create();
     world = engine.world;
+
+    initLevels();
+
+    /*
     ground = new Ground(200, 690, 600, 20);
 
     rope = new Rope(6, {x: 245, y:30});
@@ -109,7 +114,7 @@ function setup() {
     muteBtn.position(450, 20);
     muteBtn.size(50,50);
     muteBtn.mouseClicked(mute);
-
+*/
     ellipseMode(RADIUS);
     rectMode(CENTER);
     imageMode(CENTER);
@@ -117,18 +122,30 @@ function setup() {
 
 function draw() {
     background(51);
-    image(bg, width /2, height /2, 490, 690);
+
+    if(bg) {
+        image(bg, width /2, height /2, 490, 690);
+    }
     
+    if(engine) {
+        Engine.update(engine);
+    }
 
-
-    Engine.update(engine);
-    ground.display();
-    rope.display();
+    if(ground) ground.display();
+    if(higherground) higherground.display();
+    if(rope) rope.display();
+    if(rope2) rope2.display();
 
     if(fruit != null ) {
         image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
     }
 
+    checkGameState();
+    drawBunny();
+    drawHud();
+    drawFade();
+
+    /*
     if(fruit != null) {
 
         if(collide(fruit, ground.body, 80)) {
@@ -151,14 +168,11 @@ function draw() {
 
     }
     
-   
-    
-    
     drawBunny();
-   
+   */
 
    // ellipse(fruit.position.x, fruit.position.y, 15);
-}
+} 
 
 function drawBunny() {
     let frames = animations[currentAnimation];
@@ -191,8 +205,11 @@ function drawBunny() {
 }
 
 function drop() {
-    cutSound.play();
-    rope.break();
+    if(rope) {
+        rope.break();
+        if(cutSound && !cutSound.isPlaying()) cutSound.play();
+    }
+    
     fruitCon.detach();
     fruitCon = null;
 }
