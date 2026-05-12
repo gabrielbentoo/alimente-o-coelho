@@ -42,7 +42,7 @@ function loadGame() {
         };
    }
     catch (e) {
-        console.error("Erro ao carregar save:" e);
+        console.error("Erro ao carregar save:", e);
         return getDefaultProgress()
     }
 }

@@ -77,6 +77,7 @@ function preload() {
 function setup() {
     createCanvas(500, 700);
     
+    
 
     engine = Engine.create();
     world = engine.world;
@@ -209,9 +210,11 @@ function drop() {
         rope.break();
         if(cutSound && !cutSound.isPlaying()) cutSound.play();
     }
-    
-    fruitCon.detach();
-    fruitCon = null;
+    if(fruitCon) {
+        fruitCon.detach();
+        fruitCon = null;
+    }
+   
 }
 
 function collide(body, target, distance) {
@@ -225,8 +228,14 @@ function collide(body, target, distance) {
 }
 
 function airblow() {
-    Matter.Body.applyForce(fruit, { x: 0, y: 0}, { x: 0.01, y: 0});
-    airSound.play();
+    if(fruit) {
+        Matter.Body.applyForce(fruit, fruit.position, { x: 0.01, y: 0});
+        if(airSound && !airSound.isPlaying()) {
+            airSound.play();
+        }
+    }
+    
+    
 }
 
 function mute() {
@@ -235,5 +244,12 @@ function mute() {
     }
     else{
         bgSound.play();
+    }
+}
+
+function mousePressed() {
+    userStartAudio();
+    if(bgSound && !bgSound.isPlaying()) {
+        bgSound.loop();
     }
 }

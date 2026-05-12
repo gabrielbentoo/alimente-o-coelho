@@ -45,9 +45,9 @@ function level1() {
     engine = Engine.create();
     world = engine.world;
     
-    ground = new ground(200, 690, 600, 20);
+    ground = new Ground(200, 690, 600, 20);
 
-    rope = new rope(6, {x: 245, y:30});
+    rope = new Rope(6, {x: 245, y:30});
 
     let fruitOptions = {
         density: 0.001
