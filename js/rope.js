@@ -12,9 +12,9 @@ class Rope {
             });
         });
         this.pointA = pointA;
-        this.body = Matter.Composites.chain(rects, 0.1, 0, -0.6, 0, {stiffness: 0.1, length: 0.1, render: {type: "line"}});
-        World.add(engine.world, this.body);
-        Matter.Composite.add(rects, Constraint.create({
+        this.body = Matter.Composites.chain(rects, 0.1, 0, -0.6, 0, {stiffness: 0.1, length: 0.1});
+        Matter.World.add(world, this.body);
+        Matter.Composite.add(rects, Matter.Constraint.create({
             pointA: this.pointA,
             bodyB: rects.bodies[0],
             pointB: {x: -25, y: 0},
@@ -28,11 +28,12 @@ class Rope {
             Matter.World.remove(world, this.body);
             this.body = null;
         }
-        
+        // Matter.Composite.clear(this.body, false);
     }
 
     display() {
-        if(this.body != null) {
+        // if(this.body != null) {
+        if(this.body && this.body.bodies.length > 0) {
             for(let i = 0; i < this.body.bodies.length -1; i++) {
                 this.drawVertices(this.body.bodies[i].vertices);
             }
