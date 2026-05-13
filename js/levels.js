@@ -31,6 +31,14 @@ function loadLevel(index) {
 // limpar mundo
 
 function clearWorld() {
+    clearUI();
+    if(button) button.remove();
+    if(button2) button2.remove();
+    if(blower) blower.remove();
+    button = null;
+    button2 = null;
+    blower = null;
+    
     if(world) {
         Composite.clear(world, false);
         Engine.clear(engine);
@@ -54,7 +62,8 @@ function level1() {
     };
 
     fruit = Bodies.circle(300, 300, 15, fruitOptions);
-    Composite.add(rope.body, fruit);
+    // Composite.add(rope.body, fruit);
+    World.add(world, fruit);
     
     fruitCon = new Link(rope, fruit);
 
@@ -71,14 +80,23 @@ function level2() {
     engine = Engine.create();
     world = engine.world;
 
-    ground = new ground(200, 690, 600, 20);
-    higherground = new ground(300, 170, 100, 10);
+    ground = new Ground(200, 690, 600, 20);
+    higherground = new Ground(300, 170, 100, 10);
+
+    bunny.x = 300;
+    bunny.y = 120;
 
     rope = new Rope(4, {x:230, y:330});
     rope2 = new Rope(4, {x:60, y:450});
 
-    fruit = Bodies.circle(100, 400, 15);
-    Composite.add(rope.body, fruit);
+    let fruitOptions = {
+        density: 0.001,
+
+    }
+
+    fruit = Bodies.circle(150, 300, 15, fruitOptions);
+    // Composite.add(rope.body, fruit);
+    World.add(world, fruit);
 
     fruitCon = new Link(rope, fruit);
     fruitCon2 = new Link(rope2, fruit);
@@ -242,4 +260,33 @@ function drawFade() {
             fading = false;
         }
     }
+
+}
+
+function createLevel2UI() {
+    button = createImg("assets/cut-btn.png");
+    button.position(210,300);
+    button.size(50,50);
+    button.mouseClicked(() => {
+        if(rope) rope.break();
+        if(fruitCon) {
+            fruitCon.detach();
+            fruitCon = null;
+        }
+    });
+
+    button2 = createImg("assets/cut-btn.png");
+    button2.position(40,420);
+    button2.size(50,50);
+    button2.mouseClicked(() => {
+        if(rope2) rope2.break();
+        if(fruitCon2) {
+            fruitCon2.detach();
+            fruitCon2 = null;
+        }
+    });
+    blower = createImg("assets/balloon.png");
+    blower.position(10, 250);
+    blower.size(120, 80);
+    blower.mouseClicked(airblow);
 }

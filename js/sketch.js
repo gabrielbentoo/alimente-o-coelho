@@ -41,6 +41,7 @@ let eatingSound;
 let airSound;
 let blower;
 let muteBtn;
+let button2;
 
 function preload() {
 

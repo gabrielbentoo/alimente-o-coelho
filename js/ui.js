@@ -15,7 +15,7 @@ function drawHud() {
     text("Fase: " + (currentLevel + 1), 20, 30);
 
     if(playerProgress.stars[currentLevel]) {
-        text("⭐: " + stars, 20, 60);
+        text("⭐: " + playerProgress.stars[currentLevel], 20, 60);
 
     }
 

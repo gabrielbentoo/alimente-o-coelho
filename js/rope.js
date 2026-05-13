@@ -32,8 +32,8 @@ class Rope {
     }
 
     display() {
-        // if(this.body != null) {
-        if(this.body && this.body.bodies.length > 0) {
+        if(this.body != null) {
+        //if(this.body && this.body.bodies.length > 0) {
             for(let i = 0; i < this.body.bodies.length -1; i++) {
                 this.drawVertices(this.body.bodies[i].vertices);
             }
