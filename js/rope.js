@@ -24,11 +24,11 @@ class Rope {
     }
 
     break() {
-        if(this.body) {
-            Matter.World.remove(world, this.body);
+       /* if(this.body) {
+           // Matter.World.remove(world, this.body);
             this.body = null;
-        }
-        // Matter.Composite.clear(this.body, false);
+        } */
+         Matter.Composite.clear(this.body, false);
     }
 
     display() {

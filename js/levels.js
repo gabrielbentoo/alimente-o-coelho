@@ -62,8 +62,8 @@ function level1() {
     };
 
     fruit = Bodies.circle(300, 300, 15, fruitOptions);
-    // Composite.add(rope.body, fruit);
-    World.add(world, fruit);
+    Composite.add(rope.body, fruit);
+    //World.add(world, fruit);
     
     fruitCon = new Link(rope, fruit);
 
@@ -103,29 +103,58 @@ function level2() {
     fruitCon = new Link(rope2, fruit);
     fruitCon2 = new Link(rope3, fruit);
 
-    createUI();
+    createUI2();
 }
 
 //UI
 
 function createUI() {
+    clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
     button.position(930, 30);
     button.size(50, 50);
     button.mouseClicked(() => {
-        if(rope) rope.break();
-        if(fruitCon) fruitCon.detach();
+        //if(rope) rope.break();
+        if(fruitCon){
+            fruitCon.detach();
+            fruitCon = null;
+        } 
+    });
+
+    //blower
+    blower = createImg("assets/balloon.png");
+    blower.position(600, 400);
+    blower.size(100, 100);
+    blower.mouseClicked(airblow);
+}
+
+function createUI2() {
+     clearUIElements();
+    //botao cortar
+    button = createImg("assets/cut-btn.png");
+    button.position(180, 250);
+    button.size(50, 50);
+    button.mouseClicked(() => {
+       // if(rope2) rope2.break();
+        if(fruitCon) {
+            fruitCon.detach();
+            fruitCon = null;
+        }
     });
 
     //botao 2 
     button2 = createImg("assets/cut-btn.png");
-    button2.position(225, 275);
+    button2.position(20, 370);
     button2.size(50, 50);
     button2.mouseClicked(() => {
-        if(rope2) rope2.break();
-        if(fruitCon) fruitCon.detach();
+        if(rope3) rope3.break();
+        if(fruitCon2) {
+            fruitCon2.detach();
+            fruitCon2 = null;
+        }
     });
+
 
     //blower
     blower = createImg("assets/balloon.png");
@@ -279,7 +308,7 @@ function createLevel2UI() {
     button.position(210,300);
     button.size(50,50);
     button.mouseClicked(() => {
-        if(rope) rope.break();
+        //if(rope) rope.break();
         if(fruitCon) {
             fruitCon.detach();
             fruitCon = null;
@@ -290,7 +319,7 @@ function createLevel2UI() {
     button2.position(40,420);
     button2.size(50,50);
     button2.mouseClicked(() => {
-        if(rope2) rope2.break();
+        //if(rope2) rope2.break();
         if(fruitCon2) {
             fruitCon2.detach();
             fruitCon2 = null;
@@ -300,4 +329,10 @@ function createLevel2UI() {
     blower.position(10, 250);
     blower.size(120, 80);
     blower.mouseClicked(airblow);
+}
+
+function clearUIElements() {
+    if(button) button.remove();
+    if(button2) button2.remove();
+    if(blower) blower.remove();
 }
