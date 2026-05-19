@@ -86,8 +86,8 @@ function level2() {
     bunny.x = 300;
     bunny.y = 120;
 
-    rope = new Rope(4, {x:230, y:330});
-    rope2 = new Rope(4, {x:60, y:450});
+    rope2 = new Rope(4, {x:250, y:300});
+    rope3 = new Rope(4, {x:60, y:350});
 
     let fruitOptions = {
         density: 0.001,
@@ -96,10 +96,12 @@ function level2() {
 
     fruit = Bodies.circle(150, 300, 15, fruitOptions);
     // Composite.add(rope.body, fruit);
-    World.add(world, fruit);
+    //World.add(world, fruit);
+    Composite.add(rope2.body, fruit);
+    Composite.add(rope3.body, fruit);
 
-    fruitCon = new Link(rope, fruit);
-    fruitCon2 = new Link(rope2, fruit);
+    fruitCon = new Link(rope2, fruit);
+    fruitCon2 = new Link(rope3, fruit);
 
     createUI();
 }
@@ -113,6 +115,15 @@ function createUI() {
     button.size(50, 50);
     button.mouseClicked(() => {
         if(rope) rope.break();
+        if(fruitCon) fruitCon.detach();
+    });
+
+    //botao 2 
+    button2 = createImg("assets/cut-btn.png");
+    button2.position(225, 275);
+    button2.size(50, 50);
+    button2.mouseClicked(() => {
+        if(rope2) rope2.break();
         if(fruitCon) fruitCon.detach();
     });
 

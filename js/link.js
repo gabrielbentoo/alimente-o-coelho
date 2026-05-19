@@ -9,15 +9,16 @@ class Link {
                 pointA: {x: 0, y:0},
                 bodyB: this.body,
                 pointB: {x:0, y:0},
-                length: -10,
-                stiffness: 0.01
+                //length: -10,
+                length: 2,
+                stiffness: 0.04
             }
         );
         Matter.World.add(engine.world, this.link);
     }
     detach() {
         if(this.link) {
-            Matter.World.remove(engine.world, this.link);
+            Matter.World.remove(world, this.link);
             this.link  = null;
         }
         

@@ -11,6 +11,7 @@ let ground;
 let higherground;
 let rope;
 let rope2;
+let rope3;
 let fruit;
 let fruitCon;
 let fruitCon2;
@@ -137,6 +138,7 @@ function draw() {
     if(higherground) higherground.display();
     if(rope) rope.display();
     if(rope2) rope2.display();
+    if(rope3) rope3.display();
 
     if(fruit != null ) {
         image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
