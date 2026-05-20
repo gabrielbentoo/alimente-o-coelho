@@ -133,7 +133,7 @@ function createUI2() {
      clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
-    button.position(180, 250);
+    button.position(930, 290);
     button.size(50, 50);
     button.mouseClicked(() => {
        // if(rope2) rope2.break();
@@ -145,7 +145,7 @@ function createUI2() {
 
     //botao 2 
     button2 = createImg("assets/cut-btn.png");
-    button2.position(20, 370);
+    button2.position(760, 340);
     button2.size(50, 50);
     button2.mouseClicked(() => {
         if(rope3) rope3.break();
