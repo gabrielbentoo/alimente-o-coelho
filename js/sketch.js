@@ -22,13 +22,13 @@ let bunny = {
     x: 420,
     y: 620,
     scale: 1.5
-}
+};
 
 let animations = {
     blinking: [],
     eating: [],
     crying: []
-}
+};
 
 let currentAnimation = "blinking";
 let frameIndex = 0;
@@ -43,12 +43,20 @@ let airSound;
 let blower;
 let muteBtn;
 let button2;
+let bubbleImg;
+let bubble = {
+    x: 280,
+    y: 420,
+    size: 60
+};
+let bubbleAttached = false;
 
 function preload() {
 
     bg = loadImage("assets/background.png");
     fruitImg = loadImage("assets/melon.png");
     bunnyImg = loadImage("assets/Rabbit-01.png");
+    bubbleImg = loadImage("assets/bubble.png");
 
     //blinking
     animations.blinking.push(loadImage("assets/blink-1.png"));
@@ -144,6 +152,16 @@ function draw() {
         image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
     }
 
+    if(bubbleAttached && fruit != null) {
+        image(bubbleImg, fruit.position.x, fruit.position.y, 100, 100);
+        Matter.Body.applyForce(fruit, fruit.position, {x: 0, y: -0.0009});
+    }
+
+    if(currentLevel === 1 && !bubbleAttached) {
+        image(bubbleImg, bubble.x, bubble.y, bubble.size, bubble.size);
+    }
+   
+
     checkGameState();
     drawBunny();
     drawHud();
@@ -231,7 +249,7 @@ function collide(body, target, distance) {
 }
 
 function airblow() {
-    if(fruit) {
+    if(fruit && gameState ===  "playing") {
         Matter.Body.applyForce(fruit, fruit.position, { x: 0.01, y: 0});
         if(airSound && !airSound.isPlaying()) {
             airSound.play();

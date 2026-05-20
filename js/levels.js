@@ -32,17 +32,30 @@ function loadLevel(index) {
 
 function clearWorld() {
     clearUI();
-    if(button) button.remove();
-    if(button2) button2.remove();
-    if(blower) blower.remove();
+    clearUIElements();
+
+    if(world) {
+        Matter.Composite.clear(world, false);
+        Matter.Engine.clear(engine);
+    }
+
+    ground = null;
+    higherground = null;
+    rope = null;
+    rope2 = null;
+    rope3 = null;
+    fruit = null;
+    fruitCon = null;
+    fruitCon2 = null;
+    blower = null; 
     button = null;
     button2 = null;
-    blower = null;
-    
-    if(world) {
-        Composite.clear(world, false);
-        Engine.clear(engine);
-    }
+
+    bubbleAttached = false;
+
+    /* if(button) button.remove();
+    if(button2) button2.remove();
+    if(blower) blower.remove(); */
 }
 
 // fase 1
@@ -72,7 +85,6 @@ function level1() {
 
 //fase 2
 
-let bubble = { x: 290, y: 460};
 
 function level2() {
     console.log("Fase 2 carregada!");
@@ -84,7 +96,7 @@ function level2() {
     higherground = new Ground(300, 170, 100, 10);
 
     bunny.x = 300;
-    bunny.y = 120;
+    bunny.y = 110;
 
     rope2 = new Rope(4, {x:250, y:300});
     rope3 = new Rope(4, {x:60, y:350});
@@ -167,6 +179,9 @@ function createUI2() {
 
 function checkGameState() {
     if(fruit != null) {
+        if(currentLevel === 1 && !bubbleAttached && collide(fruit, bubble, 60)) {
+            bubbleAttached = true;
+        }
         //come
         if(collide(fruit, ground.body, 80)) {
             bgSound.stop();
