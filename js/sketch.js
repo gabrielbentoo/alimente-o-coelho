@@ -50,6 +50,7 @@ let bubble = {
     size: 60
 };
 let bubbleAttached = false;
+let levelFinished = false;
 
 function preload() {
 
@@ -142,6 +143,7 @@ function draw() {
         Engine.update(engine);
     }
 
+    checkGameState();
     if(ground) ground.display();
     if(higherground) higherground.display();
     if(rope) rope.display();
@@ -162,7 +164,7 @@ function draw() {
     }
    
 
-    checkGameState();
+    
     drawBunny();
     drawHud();
     drawFade();
@@ -239,22 +241,34 @@ function drop() {
 }
 
 function collide(body, target, distance) {
-    if(body != null) {
+    if(!body || !target) return false;
+    let tx = target.x || target.position?.x;
+    let ty = target.y || target.position?.y;
+    let d = dist(body.position.x, body.position.y, tx, ty);
+    return d <= distance;
+
+    /*if(body != null) {
         let tx = target.x || target.position?.x;
         let ty = target.y || target.position?.y;
         let d = dist(body.position.x, body.position.y, tx, ty);
         return d <= distance;
     }
-    return false;
+    return false; */
 }
 
 function airblow() {
-    if(fruit && gameState ===  "playing") {
+    if(levelFinished) return;
+    if(!fruit) return;
+    Matter.Body.applyForce(fruit, fruit.position, { x: 0.01, y: 0});
+    if(airSound && !airSound.isPlaying()) {
+        airSound.play();
+    }
+    /*if(fruit && gameState ===  "playing") {
         Matter.Body.applyForce(fruit, fruit.position, { x: 0.01, y: 0});
         if(airSound && !airSound.isPlaying()) {
             airSound.play();
         }
-    }
+    }*/
     
     
 }

@@ -25,6 +25,7 @@ function loadLevel(index) {
     clearWorld();
     currentLevel = index;
     gameState = "playing";
+    levelFinished = false;
     levels[index]();
 }
 
@@ -178,22 +179,45 @@ function createUI2() {
 //sistema de resultado
 
 function checkGameState() {
-    if(fruit != null) {
+    if(levelFinished) return;
+    if(!fruit) return;
+
+    if(fruit.position.y >= height -40) {
+        levelFinished = true;
+        gameState = "lose";
+        currentAnimation = "crying";
+        frameIndex = 0;
+        isGameOver = true;
+
+        if(bgSound) bgSound.stop();
+        if(sadSound) sadSound.play();
+        
+        Matter.World.remove(world, fruit);
+        fruit = null;
+        if(blower) {
+            blower.remove();
+            blower = null;
+        }
+        return;
+        }
+        
+    /* if(fruit != null) {
         if(currentLevel === 1 && !bubbleAttached && collide(fruit, bubble, 60)) {
             bubbleAttached = true;
         }
         //come
-        if(collide(fruit, ground.body, 80)) {
+        if(collide(fruit, ground.body, 35)) {
             bgSound.stop();
             sadSound.play();
             currentAnimation = "crying";
             frameIndex = 0;
             isGameOver = true;
-            World.remove(world, fruit);
+            Matter.World.remove(world, fruit);
             fruit = null;
             
             loseLevel();
-        }
+            return;
+        
 
         else if(collide(fruit, bunny, 80)) {
             eatingSound.play();
@@ -204,12 +228,34 @@ function checkGameState() {
 
             winLevel();
         }
+    }*/
+   if(collide(fruit, bunny, 60)) {
+    levelFinished = true;
+    gameState = "win";
+    currentAnimation = "eating";
+    frameIndex = 0;
+
+    if(eatingSound) eatingSound.play();
+    Matter.World.remove(world,fruit);
+    fruit = null;
+    if(blower) {
+        blower.remove();
+        blower = null;
     }
+    let stars = calculateStars();
+    saveProgress(currentLevel, stars);
+    setTimeout(() => {
+        nextLevel();
+
+    },  1500)
+   }
 }
 
 //win / lose
 
 function winLevel() {
+    if(levelFinished) return;
+    levelFinished = true;
     gameState = "win";
 
     let stars = calculateStars();
@@ -221,6 +267,8 @@ function winLevel() {
 }
 
 function loseLevel() {
+    if(levelFinished) return;
+    levelFinished = true;
     gameState = "lose";
 
 }
