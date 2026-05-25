@@ -155,7 +155,7 @@ function draw() {
     }
 
     if(bubbleAttached && fruit != null) {
-        image(bubbleImg, fruit.position.x, fruit.position.y, 100, 100);
+        image(bubbleImg, fruit.position.x, fruit.position.y, bubble.size, bubble.size);
         Matter.Body.applyForce(fruit, fruit.position, {x: 0, y: -0.0009});
     }
 

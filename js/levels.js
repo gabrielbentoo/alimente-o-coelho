@@ -182,6 +182,10 @@ function checkGameState() {
     if(levelFinished) return;
     if(!fruit) return;
 
+    if(currentLevel === 1 && !bubbleAttached && collide(fruit, bubble, 60)) {
+            bubbleAttached = true;
+        }
+
     if(fruit.position.y >= height -40) {
         levelFinished = true;
         gameState = "lose";
@@ -238,10 +242,12 @@ function checkGameState() {
     if(eatingSound) eatingSound.play();
     Matter.World.remove(world,fruit);
     fruit = null;
+
     if(blower) {
         blower.remove();
         blower = null;
     }
+
     let stars = calculateStars();
     saveProgress(currentLevel, stars);
     setTimeout(() => {
@@ -249,7 +255,9 @@ function checkGameState() {
 
     },  1500)
    }
+
 }
+
 
 //win / lose
 
