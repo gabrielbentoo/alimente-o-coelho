@@ -22,7 +22,7 @@ function drawHud() {
     if(gameState === "win") {
         drawWinScreen();
 
-    }
+    } 
 
     if(gameState === "lose") {
         drawLoseScreen();
@@ -38,7 +38,7 @@ function drawWinScreen() {
     textAlign(CENTER);
     textSize(36);
     fill("#00FFAA");
-    text("YOU WIN!", width/2, height/2 -40);
+    text("VOCE GANHOU!", width/2, height/2 -40);
 
     let stars = calculateStars();
 
@@ -46,7 +46,7 @@ function drawWinScreen() {
     fill(255);
     text("Estrelas: " + "⭐".repeat(stars), width/2, height/2);
 
-    createUiButton("Next", width/2 - 60, height/2 + 40, () => {
+    createUiButton("Proximo", width/2  + 550, height/2 + 40, () => {
         nextLevel();
         clearUI();
     });
@@ -58,9 +58,9 @@ function drawLoseScreen() {
     textAlign(CENTER);
     textSize(36);
     fill("#FF4C4C");
-    text("TRY AGAIN!", width/2, height/2 -40);
+    text("VOCE PERDEU!", width/2, height/2 -40);
     
-    createUiButton("Retry!", width/2 -60, height/2 + 40, () => {
+    createUiButton("Tente novamente!", width/2 +550 , height/2 + 40, () => {
         loadLevel(currentLevel);
         clearUI();
     });
@@ -134,7 +134,7 @@ function drawFade() {
 }
  
 
-function drawLoading(texto = "loading...") {
+function drawLoading(texto = "carregando...") {
     background(0);
     textAlign(CENTER, CENTER);
     textSize(24);

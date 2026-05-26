@@ -181,6 +181,26 @@ function createUI2() {
 function checkGameState() {
     if(levelFinished) return;
     if(!fruit) return;
+    if(fruit.position.y < -50 || fruit.position.x < -50 || fruit.position.x > width +50) {
+        levelFinished = true;
+        gameState = "lose";
+        currentAnimation = "crying";
+        frameIndex = 0;
+        isGameOver = true;
+
+        if(bgSound) bgSound.stop();
+        if(sadSound) sadSound.play();
+
+        Matter.World.remove(world, fruit);
+        fruit = null;
+        bubbleAttached = false;
+
+        if(blower) {
+            blower.remove();
+            blower = null;
+        }
+        return; 
+    }
 
     if(currentLevel === 1 && !bubbleAttached && collide(fruit, bubble, 60)) {
             bubbleAttached = true;
