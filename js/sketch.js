@@ -95,38 +95,13 @@ function setup() {
 
     initLevels();
 
-    /*
-    ground = new Ground(200, 690, 600, 20);
-
-    rope = new Rope(6, {x: 245, y:30});
-
-    let fruitOptions = {
-        density: 0.001
-    } 
-    fruit = Bodies.circle(300, 300, 15, fruitOptions);
-    Matter.Composite.add(rope.body, fruit);
-
-    fruitCon = new Link(rope, fruit);
-
-    
-    button = createImg("assets/cut-btn.png");
-    button.position(230, 30);
-    button.size(50,50);
-    button.mouseClicked(drop);
-
-    blower = createImg("assets/balloon.png");
-    blower.position(10, 200);
-    blower.size(150, 100);
-    blower.mouseClicked(airblow);
-
     bgSound.play();
     bgSound.setVolume(0.15);
 
     muteBtn = createImg("assets/mute.png");
-    muteBtn.position(450, 20);
-    muteBtn.size(50,50);
+    muteBtn.position(1050, 20);
+    muteBtn.size(40,40);
     muteBtn.mouseClicked(mute);
-*/
     ellipseMode(RADIUS);
     rectMode(CENTER);
     imageMode(CENTER);
@@ -169,33 +144,7 @@ function draw() {
     drawHud();
     drawFade();
 
-    /*
-    if(fruit != null) {
-
-        if(collide(fruit, ground.body, 80)) {
-            bgSound.stop();
-            sadSound.play();
-            currentAnimation = "crying";
-            frameIndex = 0;
-            isGameOver = true;
-            World.remove(world, fruit);
-            fruit = null;
-        }
-
-        else if(collide(fruit, bunny, 80)) {
-            eatingSound.play();
-            currentAnimation = "eating";
-            frameIndex = 0;
-            World.remove(world, fruit);
-            fruit = null;
-        }
-
-    }
-    
-    drawBunny();
-   */
-
-   // ellipse(fruit.position.x, fruit.position.y, 15);
+   
 } 
 
 function drawBunny() {
@@ -247,13 +196,6 @@ function collide(body, target, distance) {
     let d = dist(body.position.x, body.position.y, tx, ty);
     return d <= distance;
 
-    /*if(body != null) {
-        let tx = target.x || target.position?.x;
-        let ty = target.y || target.position?.y;
-        let d = dist(body.position.x, body.position.y, tx, ty);
-        return d <= distance;
-    }
-    return false; */
 }
 
 function airblow() {
@@ -263,14 +205,7 @@ function airblow() {
     if(airSound && !airSound.isPlaying()) {
         airSound.play();
     }
-    /*if(fruit && gameState ===  "playing") {
-        Matter.Body.applyForce(fruit, fruit.position, { x: 0.01, y: 0});
-        if(airSound && !airSound.isPlaying()) {
-            airSound.play();
-        }
-    }*/
-    
-    
+
 }
 
 function mute() {

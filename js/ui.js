@@ -67,8 +67,12 @@ function drawLoseScreen() {
 }
 
 function drawOverlay() {
+    push();
+    rectMode(CORNER);
+    noStroke();
     fill(0, 180);
     rect(0, 0, width, height);
+    pop();
 }
 
 function createUiButton(label, x, y, onClick) {
@@ -120,10 +124,15 @@ function drawFade() {
         }
     }
 
+    push();
+    rectMode(CORNER);
+    noStroke();
     fill(0, fadeAlpha);
     rect(0, 0, width, height);
+    pop();
 
 }
+ 
 
 function drawLoading(texto = "loading...") {
     background(0);

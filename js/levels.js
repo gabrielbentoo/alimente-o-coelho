@@ -125,7 +125,7 @@ function createUI() {
     clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
-    button.position(930, 30);
+    button.position(843, 30);
     button.size(50, 50);
     button.mouseClicked(() => {
         //if(rope) rope.break();
@@ -137,7 +137,7 @@ function createUI() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    blower.position(600, 400);
+    blower.position(617, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
@@ -146,7 +146,7 @@ function createUI2() {
      clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
-    button.position(930, 290);
+    button.position(835,290);
     button.size(50, 50);
     button.mouseClicked(() => {
        // if(rope2) rope2.break();
@@ -158,7 +158,7 @@ function createUI2() {
 
     //botao 2 
     button2 = createImg("assets/cut-btn.png");
-    button2.position(760, 340);
+    button2.position(670, 340);
     button2.size(50, 50);
     button2.mouseClicked(() => {
         if(rope3) rope3.break();
@@ -171,7 +171,7 @@ function createUI2() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    blower.position(600, 400);
+    blower.position(617, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
@@ -198,41 +198,14 @@ function checkGameState() {
         
         Matter.World.remove(world, fruit);
         fruit = null;
+
         if(blower) {
             blower.remove();
             blower = null;
         }
         return;
-        }
+    }
         
-    /* if(fruit != null) {
-        if(currentLevel === 1 && !bubbleAttached && collide(fruit, bubble, 60)) {
-            bubbleAttached = true;
-        }
-        //come
-        if(collide(fruit, ground.body, 35)) {
-            bgSound.stop();
-            sadSound.play();
-            currentAnimation = "crying";
-            frameIndex = 0;
-            isGameOver = true;
-            Matter.World.remove(world, fruit);
-            fruit = null;
-            
-            loseLevel();
-            return;
-        
-
-        else if(collide(fruit, bunny, 80)) {
-            eatingSound.play();
-            currentAnimation = "eating";
-            frameIndex = 0;
-            World.remove(world, fruit);
-            fruit = null;
-
-            winLevel();
-        }
-    }*/
    if(collide(fruit, bunny, 60)) {
     levelFinished = true;
     gameState = "win";
@@ -360,19 +333,6 @@ function startFade() {
     fadeAlpha = 0;
 }
 
-function drawFade() {
-    if(fading) {
-        fadeAlpha += 10;
-
-        fill(0, fadeAlpha);
-        Reflect(0, 0, width, height);
-
-        if(fadeAlpha >= 255) {
-            fading = false;
-        }
-    }
-
-}
 
 function createLevel2UI() {
     button = createImg("assets/cut-btn.png");
