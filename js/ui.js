@@ -46,10 +46,20 @@ function drawWinScreen() {
     fill(255);
     text("Estrelas: " + "⭐".repeat(stars), width/2, height/2);
 
-    createUiButton("Proximo", width/2  + 550, height/2 + 40, () => {
+    if(currentLevel +1 < levels.length) {
+        createUiButton("Proximo", width/2  + 550, height/2 + 40, () => {
         nextLevel();
         clearUI();
-    });
+        });
+    }
+    else{
+        createUiButton("Fim!", width/2 +550, height/2 +30, () => {
+            clearUI();
+        });
+        textSize(20);
+        fill(255);
+        text("Voce zerou o jogo", width/2, height/2 + 90);
+    }
 }
 
 function drawLoseScreen() {

@@ -51,6 +51,7 @@ let bubble = {
 };
 let bubbleAttached = false;
 let levelFinished = false;
+let isMuted = false;
 
 function preload() {
 
@@ -209,17 +210,34 @@ function airblow() {
 }
 
 function mute() {
-    if(bgSound.isPlaying()) {
+    if(!bgSound) return;
+
+    if(isMuted) {
+        bgSound.setVolume(0.1);
+        isMuted = false;
+    }
+    else{
+        bgSound.setVolume(0);
+        isMuted = true;
+    }
+
+   /* if(bgSound.isPlaying()) {
         bgSound.stop();
     }
     else{
         bgSound.play();
-    }
+    } */
 }
 
 function mousePressed() {
     userStartAudio();
     if(bgSound && !bgSound.isPlaying()) {
         bgSound.loop();
+        if(isMuted) {
+            bgSound.setVolume(0);
+        }
+        else{
+            bgSound.setVolume(0.1);
+        }
     }
 }
