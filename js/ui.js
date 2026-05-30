@@ -47,13 +47,13 @@ function drawWinScreen() {
     text("Estrelas: " + "⭐".repeat(stars), width/2, height/2);
 
     if(currentLevel +1 < levels.length) {
-        createUiButton("Proximo", width/2  + 550, height/2 + 40, () => {
+        createUiButton("Proximo", width/2  +100, height/2 +40, () => {
         nextLevel();
         clearUI();
         });
     }
     else{
-        createUiButton("Fim!", width/2 +550, height/2 +30, () => {
+        createUiButton("Fim!", width/2 -60, height/2 +30, () => {
             clearUI();
         });
         textSize(20);

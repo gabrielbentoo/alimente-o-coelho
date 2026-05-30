@@ -125,7 +125,7 @@ function createUI() {
     clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
-    button.position(843, 30);
+    placeElement(button, width -280, 30);
     button.size(50, 50);
     button.mouseClicked(() => {
         //if(rope) rope.break();
@@ -137,7 +137,7 @@ function createUI() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    blower.position(617, 400);
+    placeElement(blower, width -500, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
@@ -146,7 +146,7 @@ function createUI2() {
      clearUIElements();
     //botao cortar
     button = createImg("assets/cut-btn.png");
-    button.position(835,290);
+    placeElement(button, width +215, 290);
     button.size(50, 50);
     button.mouseClicked(() => {
        // if(rope2) rope2.break();
@@ -158,7 +158,7 @@ function createUI2() {
 
     //botao 2 
     button2 = createImg("assets/cut-btn.png");
-    button2.position(670, 340);
+    placeElement(button2, width +50, 340);
     button2.size(50, 50);
     button2.mouseClicked(() => {
         if(rope3) rope3.break();
@@ -171,7 +171,7 @@ function createUI2() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    blower.position(617, 400);
+    placeElement(blower, width +660, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }

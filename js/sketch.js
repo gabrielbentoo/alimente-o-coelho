@@ -52,6 +52,8 @@ let bubble = {
 let bubbleAttached = false;
 let levelFinished = false;
 let isMuted = false;
+let canvas;
+let gameContainer;
 
 function preload() {
 
@@ -87,9 +89,10 @@ function preload() {
 
 
 function setup() {
-    createCanvas(500, 700);
-    
-    
+    canvas = createCanvas(500, 700);
+    canvas.parent("game-container");
+
+    gameContainer = document.getElementById("game-container");
 
     engine = Engine.create();
     world = engine.world;
@@ -100,9 +103,10 @@ function setup() {
     bgSound.setVolume(0.15);
 
     muteBtn = createImg("assets/mute.png");
-    muteBtn.position(1050, 20);
+    placeElement(muteBtn, width -65, 20);
     muteBtn.size(40,40);
     muteBtn.mouseClicked(mute);
+
     ellipseMode(RADIUS);
     rectMode(CENTER);
     imageMode(CENTER);
@@ -240,4 +244,9 @@ function mousePressed() {
             bgSound.setVolume(0.1);
         }
     }
+}
+
+function placeElement(element, x, y) {
+    let rect = gameContainer.getBoundingClientRect();
+    element.position(rect.left + x, rect.top + y);
 }
