@@ -54,6 +54,9 @@ let levelFinished = false;
 let isMuted = false;
 let canvas;
 let gameContainer;
+let stars = [];
+let collectedStars = 0;
+let starImg;
 
 function preload() {
 
@@ -61,6 +64,7 @@ function preload() {
     fruitImg = loadImage("assets/melon.png");
     bunnyImg = loadImage("assets/Rabbit-01.png");
     bubbleImg = loadImage("assets/bubble.png");
+    starImg = loadImage("assets/stars.png");
 
     //blinking
     animations.blinking.push(loadImage("assets/blink-1.png"));
