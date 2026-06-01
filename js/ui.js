@@ -47,13 +47,13 @@ function drawWinScreen() {
     text("Estrelas: " + "⭐".repeat(stars), width/2, height/2);
 
     if(currentLevel +1 < levels.length) {
-        createUiButton("Proximo", width/2  +100, height/2 +40, () => {
+        createUiButton("Proximo", width/2   -50, height/2 +40, () => {
         nextLevel();
         clearUI();
         });
     }
     else{
-        createUiButton("Fim!", width/2 -60, height/2 +30, () => {
+        createUiButton("Fim!", width/2 -50, height/2 +30, () => {
             clearUI();
         });
         textSize(20);
@@ -70,7 +70,7 @@ function drawLoseScreen() {
     fill("#FF4C4C");
     text("VOCE PERDEU!", width/2, height/2 -40);
     
-    createUiButton("Tente novamente!", width/2 +550 , height/2 + 40, () => {
+    createUiButton("Tente novamente!", width/2 -50 , height/2 + 40, () => {
         loadLevel(currentLevel);
         clearUI();
     });
@@ -89,7 +89,7 @@ function createUiButton(label, x, y, onClick) {
     if(uiButtons.find(btn => btn.label === label)) return;
 
     let btn = createButton(label);
-    btn.position(x, y,);
+    placeElement(btn, x, y);
     btn.size(120, 40);
     btn.style("font-size", "16px");
     btn.style("background", "#222");

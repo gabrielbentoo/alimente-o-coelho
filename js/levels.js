@@ -171,7 +171,7 @@ function createUI2() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    placeElement(blower, width +660, 400);
+    placeElement(blower, width -500, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
