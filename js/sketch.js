@@ -64,7 +64,7 @@ function preload() {
     fruitImg = loadImage("assets/melon.png");
     bunnyImg = loadImage("assets/Rabbit-01.png");
     bubbleImg = loadImage("assets/bubble.png");
-    starImg = loadImage("assets/stars.png");
+    starImg = loadImage("assets/star.png");
 
     //blinking
     animations.blinking.push(loadImage("assets/blink-1.png"));
@@ -128,11 +128,16 @@ function draw() {
     }
 
     checkGameState();
+    checkStarCollection();
     if(ground) ground.display();
     if(higherground) higherground.display();
     if(rope) rope.display();
     if(rope2) rope2.display();
     if(rope3) rope3.display();
+
+    for(let star of stars) {
+        star.display();
+    }
 
     if(fruit != null ) {
         image(fruitImg, fruit.position.x, fruit.position.y, 70, 70);
@@ -253,4 +258,17 @@ function mousePressed() {
 function placeElement(element, x, y) {
     let rect = gameContainer.getBoundingClientRect();
     element.position(rect.left + x, rect.top + y);
+}
+
+function checkStarCollection() {
+    if(!fruit) return;
+    for(let star of stars) {
+        if(star.collected) continue;
+        let d = dist(fruit.position.x, fruit.position.y, star.x, star.y);
+
+        if(d < 35) {
+            star.collect();
+        }
+    }
+
 }

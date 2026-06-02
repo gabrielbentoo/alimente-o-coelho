@@ -1,4 +1,4 @@
-//estado de ui
+loadLevel//estado de ui
 
 let uiButtons = [];
 let fadeAlpha = 0;
@@ -15,7 +15,7 @@ function drawHud() {
     text("Fase: " + (currentLevel + 1), 20, 30);
 
     if(playerProgress.stars[currentLevel]) {
-        text("⭐: " + playerProgress.stars[currentLevel], 20, 60);
+        text("⭐: " + collectedStars + "/3", 20, 60);
 
     }
 

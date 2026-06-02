@@ -23,6 +23,9 @@ function initLevels() {
 
 function loadLevel(index) {
     clearWorld();
+    stars = [];
+    collectedStars = 0;
+     
     currentLevel = index;
     gameState = "playing";
     levelFinished = false;
@@ -80,6 +83,9 @@ function level1() {
     //World.add(world, fruit);
     
     fruitCon = new Link(rope, fruit);
+    stars.push(new Star(250, 280));
+    stars.push(new Star(180, 350));
+    stars.push(new Star(380, 250));
 
     createUI();
 }
@@ -115,6 +121,10 @@ function level2() {
 
     fruitCon = new Link(rope2, fruit);
     fruitCon2 = new Link(rope3, fruit);
+
+    stars.push(new Star(250, 250));
+    stars.push(new Star(220, 420));
+    stars.push(new Star(190, 130));
 
     createUI2();
 }
@@ -171,7 +181,7 @@ function createUI2() {
 
     //blower
     blower = createImg("assets/balloon.png");
-    placeElement(blower, width -500, 400);
+    placeElement(blower, width +660, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
@@ -287,12 +297,9 @@ function nextLevel() {
 //sistema de estrelas
 
 function calculateStars() {
-    let stars = 3;
+    
 
-    if(frameCount > 600) stars = 2;
-    if(frameCount > 1000) stars = 1;
-
-    return stars;
+    return collectedStars;
 }
 
 //salvar progresso
