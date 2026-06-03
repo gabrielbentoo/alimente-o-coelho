@@ -30,6 +30,9 @@ function loadLevel(index) {
     currentLevel = index;
     gameState = "playing";
     levelFinished = false;
+    isGameOver = false;
+    currentAnimation = "blinking";
+    frameIndex = 0;
     levels[index]();
 }
 
@@ -153,10 +156,8 @@ function level3() {
     fruitCon = new Link(rope, fruit);
     fruitCon2 = new Link(rope2, fruit);
 
-    createStars([
-        {x: 320, y: 50},
-        {x: 50, y: 330}
-    ]);
+    stars.push(new Star(320, 50));
+    stars.push(new Star(50, 330));
 
     createUI3();
 }
@@ -222,7 +223,7 @@ function createUI3() {
     clearUIElements();
 
     button = createImg("assets/cut-btn.png");
-    placeElement(button, 100, 90);
+    placeElement(button, width +110, 90);
     button.size(50, 50);
     button.mouseClicked(() => {
        // if(rope2) rope2.break();
@@ -234,7 +235,7 @@ function createUI3() {
 
     //botao 2 
     button2 = createImg("assets/cut-btn.png");
-    placeElement(button2, 450, 90);
+    placeElement(button2, width +450, 90);
     button2.size(50, 50);
     button2.mouseClicked(() => {
         if(rope2) rope2.break();
@@ -246,8 +247,8 @@ function createUI3() {
 
 
     //blower
-    blower = createImg("assets/balloon.png");
-    placeElement(blower, width +660, 400);
+    blower = createImg("assets/balloon2.png");
+    placeElement(blower, width -250, 400);
     blower.size(100, 100);
     blower.mouseClicked(airblow);
 }
@@ -319,11 +320,12 @@ function checkGameState() {
 
     let stars = calculateStars();
     saveProgress(currentLevel, stars);
+    /*
     setTimeout(() => {
         nextLevel();
 
-    },  1500)
-   }
+    },  1500) */
+   } 
 
 }
 
@@ -338,9 +340,9 @@ function winLevel() {
     let stars = calculateStars();
     saveProgress(currentLevel, stars);
 
-    setTimeout(() => {
+     /* setTimeout(() => {
         nextLevel();
-    }, 1500);
+    }, 1500); */
 }
 
 function loseLevel() {
@@ -448,7 +450,7 @@ function createLevel2UI() {
             fruitCon2.detach();
             fruitCon2 = null;
         }
-    });
+        });
     blower = createImg("assets/balloon.png");
     blower.position(10, 250);
     blower.size(120, 80);
