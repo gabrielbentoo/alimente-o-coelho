@@ -272,3 +272,10 @@ function checkStarCollection() {
     }
 
 }
+
+function clearStars() {
+    stars = [];
+    collectedStars = 0;
+
+    
+}

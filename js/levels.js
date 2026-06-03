@@ -1,4 +1,4 @@
-// configuracao global de fases 
+clearWorld// configuracao global de fases 
 
 let currentLevel = 0;
 let levels = [];
@@ -14,7 +14,8 @@ function initLevels() {
     loadProgress();
     levels = [
         level1,
-        level2
+        level2,
+        level3
     ]
     loadLevel(currentLevel);
 }
@@ -37,6 +38,7 @@ function loadLevel(index) {
 function clearWorld() {
     clearUI();
     clearUIElements();
+    clearStars();
 
     if(world) {
         Matter.Composite.clear(world, false);
@@ -129,6 +131,36 @@ function level2() {
     createUI2();
 }
 
+function level3() {
+    console.log("Fase 3 carregada!");
+
+    engine = Engine.create();
+    world = engine.world;
+
+    ground = new Ground(250, 690, 600, 20);
+
+    bunny.x = 200;
+    bunny.y = 620;
+
+    rope = new Rope(7, {x: 120, y: 90});
+    rope2 = new Rope(7, {x: 490, y: 90});
+
+    fruit = Bodies.circle(300, 300, 15, {density: 0.001});
+
+    Composite.add(rope.body, fruit);
+    Composite.add(rope2.body, fruit);
+
+    fruitCon = new Link(rope, fruit);
+    fruitCon2 = new Link(rope2, fruit);
+
+    createStars([
+        {x: 320, y: 50},
+        {x: 50, y: 330}
+    ]);
+
+    createUI3();
+}
+
 //UI
 
 function createUI() {
@@ -172,6 +204,40 @@ function createUI2() {
     button2.size(50, 50);
     button2.mouseClicked(() => {
         if(rope3) rope3.break();
+        if(fruitCon2) {
+            fruitCon2.detach();
+            fruitCon2 = null;
+        }
+    });
+
+
+    //blower
+    blower = createImg("assets/balloon.png");
+    placeElement(blower, width +660, 400);
+    blower.size(100, 100);
+    blower.mouseClicked(airblow);
+}
+
+function createUI3() {
+    clearUIElements();
+
+    button = createImg("assets/cut-btn.png");
+    placeElement(button, 100, 90);
+    button.size(50, 50);
+    button.mouseClicked(() => {
+       // if(rope2) rope2.break();
+        if(fruitCon) {
+            fruitCon.detach();
+            fruitCon = null;
+        }
+    });
+
+    //botao 2 
+    button2 = createImg("assets/cut-btn.png");
+    placeElement(button2, 450, 90);
+    button2.size(50, 50);
+    button2.mouseClicked(() => {
+        if(rope2) rope2.break();
         if(fruitCon2) {
             fruitCon2.detach();
             fruitCon2 = null;
