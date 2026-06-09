@@ -222,6 +222,16 @@ function airblow() {
 
 }
 
+function airblowUp() {
+    if(levelFinished) return;
+    if(!fruit) return;
+    Matter.Body.applyForce(fruit, fruit.position, { x: 0, y: -0.01});
+    if(airSound && !airSound.isPlaying()) {
+        airSound.play();
+    }
+
+}
+
 function mute() {
     if(!bgSound) return;
 

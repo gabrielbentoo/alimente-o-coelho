@@ -157,7 +157,7 @@ function level3() {
     fruitCon2 = new Link(rope2, fruit);
 
     stars.push(new Star(320, 50));
-    stars.push(new Star(50, 330));
+    stars.push(new Star(80, 330));
 
     createUI3();
 }
@@ -250,7 +250,7 @@ function createUI3() {
     blower = createImg("assets/balloon2.png");
     placeElement(blower, width -250, 400);
     blower.size(100, 100);
-    blower.mouseClicked(airblow);
+    blower.mouseClicked(airblowUp);
 }
 
 //sistema de resultado
